@@ -1,12 +1,12 @@
-import { Get, Controller } from '@nestjs/common';
-import { AppService } from './app.service';
+import {Get, Post, Controller, Body} from '@nestjs/common';
+import { AppService } from './services/app.service';
+import {Register} from './types/register';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  root(): string {
-    return this.appService.root();
+  async register(@Body() register: Register): Promise<string> {
+      return await this.appService.register(register);
   }
 }

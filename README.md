@@ -36,3 +36,10 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Mongo database
+
+Localhost dev with docker :
+
+```bash
+docker run -p 27017:27017 --name webauthn-database -d mongo
+```
