@@ -18,4 +18,6 @@ export class JWT {
     id: string;
     @ApiModelProperty()
     challenge: string;
+    @ApiModelProperty()
+    loggedIn: boolean;
 }

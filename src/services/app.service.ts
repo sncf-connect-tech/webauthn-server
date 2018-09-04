@@ -47,6 +47,10 @@ export class AppService {
     }
 
     async validateUser(payload: JWT): Promise<any> {
-        return await await RegisterModel.findOne(payload);
+        return await RegisterModel.findOne(payload);
+    }
+
+    isLoggedIn(payload: JWT): any {
+        return payload ? payload.loggedIn : false;
     }
 }
