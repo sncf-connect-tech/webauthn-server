@@ -17,7 +17,12 @@ $('#toRegistration').click(function(e) {
 })
 
 let loadMainContainer = () => {
-    return fetch('http://localhost:3000/personalInfo')
+    return fetch('http://localhost:3000/personalInfo', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer '+ localStorage.getItem('token')
+        }
+    })
         .then((response) => response.json())
         .then((response) => {
             if(response.status === 'ok') {
@@ -33,7 +38,12 @@ let loadMainContainer = () => {
 }
 
 let checkIfLoggedIn = () => {
-    return fetch('http://localhost:3000/isLoggedIn')
+    return fetch('http://localhost:3000/isLoggedIn', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer '+ localStorage.getItem('token')
+        }
+    })
         .then((response) => response.json())
         .then((response) => {
             if(response.status === 'ok') {
@@ -45,7 +55,12 @@ let checkIfLoggedIn = () => {
 }
 
 $('#logoutButton').click(() => {
-    fetch('http://localhost:3000/logout');
+    fetch('http://localhost:3000/logout', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer '+ localStorage.getItem('token')
+        }
+    });
 
     $('#registerContainer').hide();
     $('#mainContainer').hide();

@@ -21,7 +21,8 @@ let sendWebAuthnResponse = (body) => {
     return fetch('http://localhost:3000/response', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ localStorage.getItem('token'),
         },
         body: JSON.stringify(body)
     })
@@ -30,6 +31,7 @@ let sendWebAuthnResponse = (body) => {
         if(response.status !== 'ok')
             throw new Error(`Server responed with error. The message is: ${response.message}`);
 
+        localStorage.setItem("token", response.token)
         return response
     })
 }
@@ -49,6 +51,7 @@ $('#register').submit(function(event) {
     getMakeCredentialsChallenge({username, name})
         .then((response) => {
             let cred = preformatMakeCredReq(response.challenge);
+            localStorage.setItem("token", response.token)
             return navigator.credentials.create({ publicKey: cred})
         })
         .then((response) => {
