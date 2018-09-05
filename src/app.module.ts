@@ -11,9 +11,7 @@ import { PassportModule } from '@nestjs/passport';
       PassportModule.register({ defaultStrategy: 'jwt' }),
       JwtModule.register({
           secretOrPrivateKey: 'this_is_my_secret_key',
-          signOptions: {
-              expiresIn: 3600,
-          },
+          signOptions: {},
       }),
   ],
   controllers: [AppController],

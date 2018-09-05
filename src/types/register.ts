@@ -13,10 +13,7 @@ export class Register extends Typegoose {
     username: string;
     @prop({ required: true })
     @ApiModelProperty()
-    firstname: string;
-    @prop({ required: true })
-    @ApiModelProperty()
-    lastname: string;
+    name: string;
     @prop({ default: false })
     registered: boolean;
     @prop()

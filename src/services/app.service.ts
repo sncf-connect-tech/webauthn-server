@@ -20,24 +20,30 @@ export class AppService {
         Logger.log('Register user', JSON.stringify(register));
         try {
             register.registered = true;
-            let u = await RegisterModel.findOne(register);
+            let u = await RegisterModel.findOne({username: register.username});
             Logger.log('User in database : ', JSON.stringify(u));
             if (u) {
                 Logger.log('Existing user');
                 return JSON.stringify({
                     status: 'failed',
-                    message: `Username ${register} already exists`});
+                    message: `Username ${register.username} already exists`});
             } else {
                 Logger.log('New user');
                 register.registered = false;
                 u = new RegisterModel(register);
             }
             await u.save();
-            Logger.log('Register user ok');
+            Logger.log('Register user ok', JSON.stringify(u));
 
-            const challengeMakeCred = generateServerMakeCredRequest(u.username, u.firstname + '-' + u.lastname, u.id);
-            const jwt = new JWT(u.username, u.firstname, u.lastname, challengeMakeCred);
-            return this.jwtService.sign(jwt);
+            const challengeMakeCred = generateServerMakeCredRequest(register.username, register.name, u.id);
+            return JSON.stringify({
+                status: 'ok',
+                challenge: challengeMakeCred});
+            /*const jwt = new JWT(u.username, u.name, challengeMakeCred);
+            return JSON.stringify({
+                status: 'ok',
+                token: this.jwtService.sign(JSON.stringify(jwt)),
+                message: `OK`});*/
         } catch (error) {
             Logger.error(error)
             return JSON.stringify({

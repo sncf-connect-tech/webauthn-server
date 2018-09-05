@@ -1,9 +1,8 @@
 'use strict';
 
 let getMakeCredentialsChallenge = (formBody) => {
-    return fetch('http://localhost:3000/webauthn/register', {
+    return fetch('http://localhost:3000/register', {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -19,9 +18,8 @@ let getMakeCredentialsChallenge = (formBody) => {
 }
 
 let sendWebAuthnResponse = (body) => {
-    return fetch('http://localhost:3000/webauthn/response', {
+    return fetch('http://localhost:3000/response', {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -50,8 +48,8 @@ $('#register').submit(function(event) {
 
     getMakeCredentialsChallenge({username, name})
         .then((response) => {
-            let publicKey = preformatMakeCredReq(response);
-            return navigator.credentials.create({ publicKey })
+            let cred = preformatMakeCredReq(response.challenge);
+            return navigator.credentials.create({ publicKey: cred})
         })
         .then((response) => {
             let makeCredResponse = publicKeyCredentialToJSON(response);
@@ -64,13 +62,14 @@ $('#register').submit(function(event) {
                 alert(`Server responed with error. The message is: ${response.message}`);
             }
         })
-        .catch((error) => alert(error))
+        .catch((error) =>
+            alert(error)
+        )
 })
 
 let getGetAssertionChallenge = (formBody) => {
-    return fetch('http://localhost:3000/webauthn/login', {
+    return fetch('http://localhost:3000/login', {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },

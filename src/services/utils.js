@@ -45,8 +45,9 @@ let generateServerMakeCredRequest = (username, displayName, id) => {
     return {
         challenge: randomBase64URLBuffer(32),
 
+        // TODO param RP generic
         rp: {
-            name: "ACME Corporation"
+            name: "Oui.sncf"
         },
 
         user: {
