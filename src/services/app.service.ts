@@ -57,7 +57,7 @@ export class AppService {
         if (!u || !u.registered) {
             return JSON.stringify({
                 status: 'failed',
-                message: `User ${u.username} does not exist!`});
+                message: `User ${login.username} does not exist!`});
         }
 
         const getAssertion = generateServerGetAssertion(u.authenticators);
