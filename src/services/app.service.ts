@@ -64,6 +64,7 @@ export class AppService {
         getAssertion.status = 'ok';
 
         const jwt = new JWT(u.username, u.name, getAssertion.challenge);
+        jwt.loggedIn = false;
 
         return JSON.stringify({
             status: 'ok',
@@ -134,6 +135,6 @@ export class AppService {
     }
 
     isLoggedIn(payload: JWT): any {
-        return payload ? true : false;
+        return payload ? payload.loggedIn : false;
     }
 }

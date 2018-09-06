@@ -85,8 +85,9 @@
         $(document).ready(() => {
             checkIfLoggedIn()
             .then((response) => {
-                if(response)
+                if(response === true){
                     return loadMainContainer()
+                }
             })
         })
     </script>
