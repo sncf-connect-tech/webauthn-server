@@ -13,6 +13,7 @@ $('#toLogin').click(function(e) {
 $('#toRegistration').click(function(e) {
     e.preventDefault();
     $('#loginContainer').hide();
+    $('#fingertouch').hide();
     $('#registerContainer').show();
 })
 
@@ -60,8 +61,9 @@ $('#logoutButton').click(() => {
         headers: {
             'Authorization': 'Bearer '+ localStorage.getItem('token')
         }
-    });
-
+    }.then((response) => {
+        localStorage.setItem("token", response.token)
+    }));
     $('#registerContainer').hide();
     $('#mainContainer').hide();
     $('#loginContainer').show();

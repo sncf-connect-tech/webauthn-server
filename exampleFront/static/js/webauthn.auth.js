@@ -52,9 +52,11 @@ $('#register').submit(function(event) {
         .then((response) => {
             let cred = preformatMakeCredReq(response.challenge);
             localStorage.setItem("token", response.token)
+            $('#fingertouch').show();
             return navigator.credentials.create({ publicKey: cred})
         })
         .then((response) => {
+            $('#fingertouch').hide();
             let makeCredResponse = publicKeyCredentialToJSON(response);
             return sendWebAuthnResponse(makeCredResponse)
         })
