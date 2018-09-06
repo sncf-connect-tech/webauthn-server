@@ -43,6 +43,7 @@ let checkIfLoggedIn = () => {
             'Authorization': 'Bearer '+ localStorage.getItem('token')
         }
     })
+        .then((response) => response.json())
         .then((response) => {
             return response
         })
