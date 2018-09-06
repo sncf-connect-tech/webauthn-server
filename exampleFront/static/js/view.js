@@ -32,8 +32,6 @@ let loadMainContainer = () => {
                 $('#registerContainer').hide();
                 $('#loginContainer').hide();
                 $('#mainContainer').show();
-            } else {
-                alert(`Error! ${response.message}`)
             }
         })
 }
@@ -45,25 +43,13 @@ let checkIfLoggedIn = () => {
             'Authorization': 'Bearer '+ localStorage.getItem('token')
         }
     })
-        .then((response) => response.json())
         .then((response) => {
-            if(response.status === 'ok') {
-                return true
-            } else {
-                return false
-            }
+            return response
         })
 }
 
 $('#logoutButton').click(() => {
-    fetch('http://localhost:3000/logout', {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer '+ localStorage.getItem('token')
-        }
-    }.then((response) => {
-        localStorage.setItem("token", response.token)
-    }));
+    localStorage.removeItem("token")
     $('#registerContainer').hide();
     $('#mainContainer').hide();
     $('#loginContainer').show();

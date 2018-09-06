@@ -84,7 +84,7 @@ let getGetAssertionChallenge = (formBody) => {
     .then((response) => {
         if(response.status !== 'ok')
             throw new Error(`Server responed with error. The message is: ${response.message}`);
-
+        localStorage.setItem("token", response.token)
         return response
     })
 }
@@ -102,12 +102,10 @@ $('#login').submit(function(event) {
 
     getGetAssertionChallenge({username})
         .then((response) => {
-            console.log(response)
-            let publicKey = preformatGetAssertReq(response);
+            let publicKey = preformatGetAssertReq(response.challenge);
             return navigator.credentials.get({ publicKey })
         })
         .then((response) => {
-            console.log()
             let getAssertionResponse = publicKeyCredentialToJSON(response);
             return sendWebAuthnResponse(getAssertionResponse)
         })

@@ -2,6 +2,7 @@ import {Get, Post, Controller, Body, Req, UseGuards} from '@nestjs/common';
 import {AppService} from './services/app.service';
 import {Register} from './types/register';
 import {Response} from './types/Response';
+import {Login} from './types/login';
 import {ExtractJwt} from 'passport-jwt';
 import {AuthGuard} from '@nestjs/passport';
 
@@ -23,7 +24,22 @@ export class AppController {
     }
 
     @Get('isLoggedIn')
+    @UseGuards(AuthGuard('jwt'))
     isLoggedIn(@Req() req): boolean {
-        return this.appService.isLoggedIn(req.headers.Bearer);
+        return this.appService.isLoggedIn(req.user);
+    }
+
+    @Post('login')
+    login(@Body() login: Login): Promise<string> {
+        return this.appService.login(login);
+    }
+
+    @Get('personalInfo')
+    @UseGuards(AuthGuard('jwt'))
+    personal(@Req() req): string {
+        return JSON.stringify({
+            status: 'ok',
+            theSecret: 'this is the big secret page message',
+            name: req.user.token});
     }
 }

@@ -1,9 +1,10 @@
 import {Injectable, Logger} from '@nestjs/common';
 import {Register} from '../types/register';
 import {Response} from '../types/Response';
+import {Login} from '../types/login';
 import {ConfigService} from './configuration.service';
 import {JWT} from '../types/jwt';
-import {generateServerMakeCredRequest, verifyAuthenticatorAttestationResponse, verifyAuthenticatorAssertionResponse} from './utils';
+import {generateServerMakeCredRequest, verifyAuthenticatorAttestationResponse, verifyAuthenticatorAssertionResponse, generateServerGetAssertion} from './utils';
 import { JwtService } from '@nestjs/jwt';
 
 const mongoose = require('mongoose');
@@ -49,6 +50,25 @@ export class AppService {
                 status: 'failed',
                 message: `Register user ko ${error}`});
         }
+    }
+
+    async login(login: Login): Promise<string> {
+        const u = await RegisterModel.findOne({username: login.username});
+        if (!u || !u.registered) {
+            return JSON.stringify({
+                status: 'failed',
+                message: `User ${u.username} does not exist!`});
+        }
+
+        const getAssertion = generateServerGetAssertion(u.authenticators);
+        getAssertion.status = 'ok';
+
+        const jwt = new JWT(u.username, u.name, getAssertion.challenge);
+
+        return JSON.stringify({
+            status: 'ok',
+            token: this.jwtService.sign(JSON.stringify(jwt)),
+            challenge: getAssertion});
     }
 
     async response(register: Response, payload: JWT): Promise<string> {
@@ -114,6 +134,6 @@ export class AppService {
     }
 
     isLoggedIn(payload: JWT): any {
-        return payload ? payload.loggedIn : false;
+        return payload ? true : false;
     }
 }
