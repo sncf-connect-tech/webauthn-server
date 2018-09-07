@@ -4,6 +4,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JWT } from './types/jwt';
 
+const moment = require('moment');
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private readonly appService: AppService) {
@@ -15,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     async validate(payload: JWT) {
         const user = await this.appService.validateUser(payload);
-        if (!user) {
+        if (!user || moment().diff(payload.expireIn, 'seconds') > 3600) {
             throw new UnauthorizedException();
         }
         return payload;

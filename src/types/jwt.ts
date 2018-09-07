@@ -1,11 +1,14 @@
 import {ApiModelProperty} from '@nestjs/swagger';
-import {AuthInfos} from './authinfos';
+import {Moment} from 'moment';
+
+const moment = require('moment');
 
 export class JWT {
     constructor(username: string, name: string, challenge: string){
         this.username = username;
         this.name = name;
         this.challenge = challenge;
+        this.expireIn = moment();
     }
     @ApiModelProperty()
     username: string;
@@ -17,4 +20,5 @@ export class JWT {
     challenge: string;
     @ApiModelProperty()
     loggedIn: boolean;
+    expireIn: Moment;
 }

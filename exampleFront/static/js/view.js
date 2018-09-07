@@ -3,6 +3,7 @@
  */
 $('#toLogin').click(function(e) {
     e.preventDefault();
+    $('#fingertouch2').hide();
     $('#registerContainer').hide();
     $('#loginContainer').show();
 })
@@ -14,6 +15,7 @@ $('#toRegistration').click(function(e) {
     e.preventDefault();
     $('#loginContainer').hide();
     $('#fingertouch').hide();
+    $('#fingertouch2').hide();
     $('#registerContainer').show();
 })
 
@@ -31,6 +33,7 @@ let loadMainContainer = () => {
                 $('#name').html(response.name)
                 $('#registerContainer').hide();
                 $('#loginContainer').hide();
+                $('#fingertouch2').hide();
                 $('#mainContainer').show();
             }
         })

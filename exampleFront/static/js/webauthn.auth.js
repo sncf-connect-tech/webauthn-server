@@ -102,10 +102,12 @@ $('#login').submit(function(event) {
 
     getGetAssertionChallenge({username})
         .then((response) => {
+            $('#fingertouch2').show();
             let publicKey = preformatGetAssertReq(response.challenge);
             return navigator.credentials.get({ publicKey })
         })
         .then((response) => {
+            $('#fingertouch2').hide();
             let getAssertionResponse = publicKeyCredentialToJSON(response);
             return sendWebAuthnResponse(getAssertionResponse)
         })
