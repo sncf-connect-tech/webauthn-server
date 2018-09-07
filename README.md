@@ -2,7 +2,7 @@
 
 ## Description
 
-WebauthN node js server
+WebauthN node js server, with Nest, Typescipt, Passport, Mongo. Compatible with Yubico fido-2 Key
 
 ## Installation
 
