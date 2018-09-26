@@ -1,7 +1,7 @@
 import {Get, Post, Controller, Body, Req, UseGuards} from '@nestjs/common';
 import {AppService} from './services/app.service';
 import {Register} from './types/register';
-import {Response} from './types/Response';
+import {Response} from './types/response';
 import {Login} from './types/login';
 import {ExtractJwt} from 'passport-jwt';
 import {AuthGuard} from '@nestjs/passport';
