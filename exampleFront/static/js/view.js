@@ -20,7 +20,7 @@ $('#toRegistration').click(function(e) {
 })
 
 let loadMainContainer = () => {
-    return fetch('https://webauthn-back.lab-o.io/personalInfo', {
+    return fetch('http://localhost:3000/personalInfo', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer '+ localStorage.getItem('token')
@@ -40,7 +40,7 @@ let loadMainContainer = () => {
 }
 
 let checkIfLoggedIn = () => {
-    return fetch('https://webauthn-back.lab-o.io/isLoggedIn', {
+    return fetch('http://localhost:3000/isLoggedIn', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer '+ localStorage.getItem('token')
