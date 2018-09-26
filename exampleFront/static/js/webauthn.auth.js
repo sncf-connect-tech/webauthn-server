@@ -1,7 +1,7 @@
 'use strict';
 
 let getMakeCredentialsChallenge = (formBody) => {
-    return fetch('http://localhost:3000/register', {
+    return fetch('https://webauthn-back.lab-o.io/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ let getMakeCredentialsChallenge = (formBody) => {
 }
 
 let sendWebAuthnResponse = (body) => {
-    return fetch('http://localhost:3000/response', {
+    return fetch('https://webauthn-back.lab-o.io/response', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ $('#register').submit(function(event) {
 })
 
 let getGetAssertionChallenge = (formBody) => {
-    return fetch('http://localhost:3000/login', {
+    return fetch('https://webauthn-back.lab-o.io/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
