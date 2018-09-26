@@ -1,6 +1,6 @@
 import {Injectable, Logger} from '@nestjs/common';
 import {Register} from '../types/register';
-import {Response} from '../types/Response';
+import {Response} from '../types/response';
 import {Login} from '../types/login';
 import {ConfigService} from './configuration.service';
 import {JWT} from '../types/jwt';
